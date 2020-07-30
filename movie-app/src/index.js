@@ -6,18 +6,23 @@ import App from './components/App';
 import movies from './reducers/index';
 
 
-//function logger (obk,next,action)
-//logger(obj)(next)(action)
-const logger=function({dispatch,getState}){
-  return function(next){
+// //function logger (obk,next,action)
+// //logger(obj)(next)(action)
+// const logger=function({dispatch,getState}){
+//   return function(next){
 
-    return function(action){
-      //middleware code
-      console.log('ACTION_TYPE =',action.type);
-      next(action);
-    }
-  }
+//     return function(action){
+//       //middleware code
+     
+//     }
+//   }
 
+// }
+
+const logger =({dispatch,getState})=>(next) =>(action)=>{
+  //logger code
+  console.log('ACTION_TYPE =',action.type);
+  next(action);
 }
 //store requires movie argument as reducer
 const store =createStore(rootReducer,applyMiddleware(logger));
