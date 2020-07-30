@@ -4,7 +4,7 @@ import { createStore, applyMiddleware} from 'redux';
 import './index.css';
 import App from './components/App';
 import movies from './reducers/index';
-
+import thunk  from 'redux-thunk'
 
 // //function logger (obk,next,action)
 // //logger(obj)(next)(action)
@@ -21,11 +21,22 @@ import movies from './reducers/index';
 
 const logger =({dispatch,getState})=>(next) =>(action)=>{
   //logger code
-  console.log('ACTION_TYPE =',action.type);
+  if(typeof action!=="function"){
+  console.log('ACTION_TYPE =',action.type);}
   next(action);
 }
+// const thunk =({dispatch,getState})=>(next) =>(action)=>{
+//   if(typeof action ==="function")
+//   {
+//     action(dispatch);
+//     return;
+//   }
+//   //logger code
+//   //console.log('ACTION_TYPE =',action.type);
+//   next(action);
+// }
 //store requires movie argument as reducer
-const store =createStore(rootReducer,applyMiddleware(logger));
+const store =createStore(rootReducer,applyMiddleware(logger,thunk));
 // console.log('store',store);
 // console.log('STATE',store.getState());
 // store.dispatch({
