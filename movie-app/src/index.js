@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{createContext} from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware} from 'redux';
 import './index.css';
 import App from './components/App';
-import movies from './reducers/index';
+//import movies from './reducers/index';
 import thunk  from 'redux-thunk'
-
+import rootReducer from './reducers'
 // //function logger (obk,next,action)
 // //logger(obj)(next)(action)
 // const logger=function({dispatch,getState}){
@@ -43,10 +43,18 @@ const store =createStore(rootReducer,applyMiddleware(logger,thunk));
 //   type:'ADD_MOVIES',
 //   movies:[{name:'Superman '}]
 // }); 
+class Provider extends React.Component{
+  render(){
+    const {store}= this.props;
+    <StoreContext.Provider value={store}></StoreContext.Provider>
+    //whatever in betwwen tag of storecontext.provider will be children here
+    {this.props.children}
+
+  }
+}
+export const StoreContext= createContext
 ReactDOM.render(
-  <React.StrictMode>
-    <App store={store}/>
-  </React.StrictMode>,
+ <StoreContext.Provider value={store}> <App /></StoreContext.Provider>,
   document.getElementById('root')
 );
 
